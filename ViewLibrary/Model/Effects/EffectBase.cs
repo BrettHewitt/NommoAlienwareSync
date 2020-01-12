@@ -136,6 +136,7 @@ namespace ViewLibrary.Model.Effects
 
         public void StartEffect()
         {
+            SaveSettings();
             EffectManager.Instance.StartEffect(this);
         }
 

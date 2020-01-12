@@ -39,7 +39,6 @@ namespace ViewLibrary.Model.Effects
 
         public override void EffectAction()
         {
-            SaveSettings();
             UseEffect = true;
             ISpeakers speaker = new Speakers();
 

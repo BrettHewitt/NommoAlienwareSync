@@ -46,7 +46,6 @@ namespace ViewLibrary.Model.Effects
                 throw new InvalidOperationException("Can not start a custom effect with no colours");
             }
 
-            SaveSettings();
             UseEffect = true;
             ISpeakers speaker = new Speakers();
 

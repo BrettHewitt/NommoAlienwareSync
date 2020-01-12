@@ -58,7 +58,7 @@ namespace ViewLibrary.Model.Settings
                 string text = File.ReadAllText(FilePath);
                 return JsonConvert.DeserializeObject<GlobalSettings>(text);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
