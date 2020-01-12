@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="ViewLibrary.View.Effects.SpectrumUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ViewLibrary.View.Effects"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/ViewLibrary;component/XamlResources.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Spectrum" Foreground="White" Margin="10" FontSize="20" HorizontalAlignment="Center"/>
+        <Image Grid.Row="1" Source="../../Resources/spectrum.png" Margin="10" Height="50" Stretch="Fill"/>
+        <TextBlock Grid.Row="2" Text="Tempo" Margin="10" Foreground="White"/>
+        <Slider Grid.Row="3" Margin="10,5" Style="{DynamicResource SliderStyle}" Minimum="{Binding Path=MinTempo}" Maximum="{Binding Path=MaxTempo}" Value="{Binding Path=Tempo, Mode=TwoWay}"/>
+        <Grid Grid.Row="4">
+            <TextBlock Text="Slow" HorizontalAlignment="Left" FontSize="12" Margin="3,0"/>
+            <TextBlock Text="Fast" HorizontalAlignment="Right" FontSize="12" Margin="7,0"/>
+        </Grid>
+    </Grid>
+</UserControl>

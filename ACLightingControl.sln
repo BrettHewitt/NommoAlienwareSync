@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACLightingControl", "ACLightingControl\ACLightingControl.csproj", "{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewLibrary", "ViewLibrary\ViewLibrary.csproj", "{F072DFF7-5FCC-4240-9824-945279CE0CCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Debug|x64.ActiveCfg = Debug|x64
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Debug|x64.Build.0 = Debug|x64
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Release|x64.ActiveCfg = Release|x64
+		{402DD0E6-3AFF-4FCA-9AAA-7E87D39EC01A}.Release|x64.Build.0 = Release|x64
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Debug|x64.ActiveCfg = Debug|x64
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Debug|x64.Build.0 = Debug|x64
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Release|x64.ActiveCfg = Release|x64
+		{F072DFF7-5FCC-4240-9824-945279CE0CCC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {344E51F6-1F0F-423F-8372-7E90A7E54D58}
+	EndGlobalSection
+EndGlobal

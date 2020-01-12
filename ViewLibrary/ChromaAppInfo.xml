@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application>
+    <title>dataDyne Chroma Integration</title>
+    <description>dataDyne Chroma Control Software</description>
+    <author name="dataDyne Laboratories" contact="https://datadyne.bretthewitt.net"/>
+    <device_supported keyboard="0" mouse="0" headset="0" mousepad="0" keypad="0" chromalink="0" speakers="1"/>
+	<category game="0"/>
+</application>

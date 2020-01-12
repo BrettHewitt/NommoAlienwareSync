@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="ViewLibrary.View.Effects.CustomUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ViewLibrary.View.Effects"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:colorpicker="clr-namespace:ViewLibrary.Controls.ColorPicker"
+             xmlns:converters="clr-namespace:ViewLibrary.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/ViewLibrary;component/XamlResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>        
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Custom" Foreground="White" Margin="0,10,0,2" FontSize="20" HorizontalAlignment="Center"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ListView SelectionMode="Single" Margin="5" Background="Transparent" HorizontalContentAlignment="Stretch" Grid.Column="0" ItemsSource="{Binding Path=Colours}" SelectedItem="{Binding Path=SelectedColour, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Margin="0,5" Height="30" Fill="{Binding Path=Colour, Converter={StaticResource ColorToSolidColorBrushConverter}}"  />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <!-- Trun off default selection-->
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border x:Name="Bd" BorderBrush="Gray" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#22FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#55FFFFFF" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <colorpicker:ColorCanvas Background="Transparent"
+                                           BorderThickness="0"
+                                           Foreground="Gray"
+                                           UsingAlphaChannel="False"
+                                           SelectedColor="{Binding Path=SelectedColourPicker, Mode=TwoWay}" />
+                </ScrollViewer>
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <Button Content="Add" Margin="5" Command="{Binding Path=AddCommand}"/>
+                    <Button Content="Remove" Margin="5" Command="{Binding Path=RemoveCommand}"/>
+                    <TextBlock Text="Tip: Hold ctrl to deselect a colour" TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="Tempo" FontSize="12" Margin="10,5,0,0"/>
+                    <Slider Margin="10,5" Style="{DynamicResource SliderStyle}" Minimum="{Binding Path=MinTempo}" Maximum="{Binding Path=MaxTempo}" Value="{Binding Path=Tempo, Mode=TwoWay}"/>
+                    <Grid>
+                        <TextBlock Text="Slow" HorizontalAlignment="Left" FontSize="10"/>
+                        <TextBlock Text="Fast" HorizontalAlignment="Right" FontSize="10" Margin="0,0,5,0"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

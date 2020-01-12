@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F072DFF7-5FCC-4240-9824-945279CE0CCC}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>ViewLibrary</RootNamespace>
+    <AssemblyName>ViewLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AlienFXWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\alienfx-cli-master\AlienFXWrapper\bin\Release\netstandard2.0\AlienFXWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="ChromaFX, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ChromaFX\ChromaFX\bin\x64\Debug\netstandard2.0\ChromaFX.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="ScreenInformation, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScreenInformation.1.0.2.1\lib\net452\ScreenInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\ActionCommand.cs" />
+    <Compile Include="Commands\ActionCommandWithParameter.cs" />
+    <Compile Include="Controls\ColorPicker\ColorCanvas.cs" />
+    <Compile Include="Controls\ColorPicker\ColorSpectrumSlider.cs" />
+    <Compile Include="Controls\ColorPicker\ColorUtilities.cs" />
+    <Compile Include="Controls\ColorPicker\CustomColourPicker.xaml.cs">
+      <DependentUpon>CustomColourPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\HsvColour.cs" />
+    <Compile Include="Controls\MonitorDragSelection.xaml.cs">
+      <DependentUpon>MonitorDragSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
+    <Compile Include="Converters\EffectToUserControlConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToStateConverter.cs" />
+    <Compile Include="Converters\LineGapMaskConverter.cs" />
+    <Compile Include="Converters\SettingToUserControlConverter.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Model\Devices\DeviceType.cs" />
+    <Compile Include="Model\Effects\CustomEffect.cs" />
+    <Compile Include="Model\Effects\EffectBase.cs" />
+    <Compile Include="Model\Effects\EffectManager.cs" />
+    <Compile Include="Model\Effects\ScreenCapture.cs" />
+    <Compile Include="Model\Effects\Spectrum.cs" />
+    <Compile Include="Model\Effects\TempoBaseEffect.cs" />
+    <Compile Include="Model\Settings\DeviceSettings.cs" />
+    <Compile Include="Model\Settings\Effects\CustomSettings.cs" />
+    <Compile Include="Model\Settings\Effects\ScreenCaptureSettings.cs" />
+    <Compile Include="Model\Settings\Effects\SpectrumSettings.cs" />
+    <Compile Include="Model\Settings\GlobalSettings.cs" />
+    <Compile Include="Model\Settings\OpSettings\GeneralSettings.cs" />
+    <Compile Include="Model\Settings\OpSettings\LightingSettings.cs" />
+    <Compile Include="Model\Settings\ProgramSettings.cs" />
+    <Compile Include="Model\Settings\SettingsManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TemplateSelectors\DeviceToImageSelector.cs" />
+    <Compile Include="ViewModel\Devices\DeviceBaseViewModel.cs" />
+    <Compile Include="ViewModel\Devices\MonitorViewModel.cs" />
+    <Compile Include="ViewModel\Devices\SpeakerViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\Monitors\DisplayViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Settings\GeneralSettingsViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Effects\CustomEffectViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Effects\EffectBaseViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Effects\ScreenCaptureViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Effects\SpectrumViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Effects\TempoBaseEffectViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\LightingViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Settings\LightingSettingsViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Settings\SettingsBaseViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\StatusViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\WindowViewModelBase.cs" />
+    <Compile Include="View\Effects\CustomUserControl.xaml.cs">
+      <DependentUpon>CustomUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Effects\ScreenCaptureUserControl.xaml.cs">
+      <DependentUpon>ScreenCaptureUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Effects\SpectrumUserControl.xaml.cs">
+      <DependentUpon>SpectrumUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\GeneralSettingsView.xaml.cs">
+      <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\LightingSettingsView.xaml.cs">
+      <DependentUpon>LightingSettingsView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ColorPicker\CustomColourPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MonitorDragSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\GeneralSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\LightingSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="XamlResources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Effects\CustomUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Effects\ScreenCaptureUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Effects\SpectrumUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindowView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AlienFX.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ChromaAppInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\dd_transparent_White_square_256x256.png" />
+    <Resource Include="Resources\spectrum.png" />
+    <Resource Include="Resources\AW3418.jpg" />
+    <Resource Include="Resources\AW3420DW.jpg" />
+    <Resource Include="Resources\nommo-pro.jpg" />
+    <Resource Include="Resources\nommo.jpg" />
+    <Resource Include="Resources\dd_transparent_white__square_48x48.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
