@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewLibrary.Model.Effects;
 using ViewLibrary.Model.Settings;
 using ViewLibrary.Properties;
 using ViewLibrary.ViewModel.Devices;
@@ -33,7 +34,8 @@ namespace ViewLibrary.ViewModel.TabPages
                 NotifyPropertyChanged();
             }
         }
-        
+
+
         private bool _AlienwareError;
         public bool AlienwareError
         {
@@ -73,7 +75,8 @@ namespace ViewLibrary.ViewModel.TabPages
                 NotifyPropertyChanged();
             }
         }
-        
+
+
         public StatusViewModel()
         {
             LoadDevices();
@@ -81,22 +84,22 @@ namespace ViewLibrary.ViewModel.TabPages
 
         private void LoadDevices()
         {
+            EffectManager.Instance.DeviceChanged += Instance_DeviceChanged;
+            EffectManager.Instance.Initialise();
+        }
+
+        private void Instance_DeviceChanged(object sender, DeviceChangedEventArgs args)
+        {
             //Get settings
             GlobalSettings settings = SettingsManager.GetSettings();
-
             ObservableCollection<DeviceBaseViewModel> devices = new ObservableCollection<DeviceBaseViewModel>();
 
-            //Check Monitors
-            if (!AlienFXLightingControl.FXInit())
-            {
-                //Error Init, LightFX most likely isn't present
-                AlienwareError = true;
-                settings.DeviceSettings.HasLightFXSdk = false;
-            }
-            else
+            settings.DeviceSettings.HasLightFXSdk = args.HasLightFX;
+            AlienwareError = !args.HasLightFX;
+
+            if (args.HasLightFX)
             {
                 MonitorDetails[] monitors = AlienFXLightingControl.GetAllDevices();
-                AlienFXLightingControl.FXRelease();
 
                 if (monitors != null)
                 {
@@ -105,73 +108,38 @@ namespace ViewLibrary.ViewModel.TabPages
                         devices.Add(new MonitorViewModel(monitor));
                     }
                 }
-
-                AlienwareError = false;
-                settings.DeviceSettings.HasLightFXSdk = true;
             }
 
-            //Check Speakers
-            bool isChromaInitialized = false;
-            try
-            {
-                isChromaInitialized = Chroma.Instance.Initialized;
-            }
-            catch (Exception)
-            {
-                //Error init, Chroma SDK most likely isn't present
-                isChromaInitialized = false;
-                ChromaError = true;
-                settings.DeviceSettings.HasNommo = false;
-                settings.DeviceSettings.HasNommoPro = false;
-            }
+            settings.DeviceSettings.HasChromaSDK = args.HasChroma;
+            ChromaError = !args.HasChroma;
 
-            settings.DeviceSettings.HasChromaSDK = isChromaInitialized;
-
-            if (isChromaInitialized)
+            if (args.HasChroma)
             {
-                //Check for Nommo
-                ChromaFX.Devices.DeviceInfo speaker;
-                try
+                if (args.ChromaGuid == ChromaFX.Devices.Devices.Nommo && args.ChromaSpeaker.HasValue)
                 {
-                    speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.Nommo);
-                    devices.Add(new SpeakerViewModel(speaker)
+                    devices.Add(new SpeakerViewModel(args.ChromaSpeaker.Value)
                     {
                         DeviceName = "Razer Nommo"
                     });
 
                     settings.DeviceSettings.HasNommo = true;
-
                 }
-                catch (Exception)
+                else if (args.ChromaGuid == ChromaFX.Devices.Devices.NommoPro && args.ChromaSpeaker.HasValue)
                 {
-                    //No device present
-                    settings.DeviceSettings.HasNommo = false;
-                }
-
-                //Check for Nommo Pro
-                try
-                {
-                    speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.NommoPro);
-                    devices.Add(new SpeakerViewModel(speaker)
+                    devices.Add(new SpeakerViewModel(args.ChromaSpeaker.Value)
                     {
                         DeviceName = "Razer Nommo Pro"
                     });
+
                     settings.DeviceSettings.HasNommoPro = true;
                 }
-                catch (Exception)
-                {
-                    //No device present
-                    settings.DeviceSettings.HasNommoPro = false;
-                }
-
-                ChromaError = false;
-
-                Chroma.Instance.Uninitialize();
             }
 
             Devices = devices;
 
             SettingsManager.SaveSettings(settings);
+
+            EffectManager.Instance.ResetEffect();
         }
     }
 }

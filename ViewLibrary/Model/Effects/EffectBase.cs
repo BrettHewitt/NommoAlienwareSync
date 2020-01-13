@@ -128,6 +128,10 @@ namespace ViewLibrary.Model.Effects
             EffectName = effectName;
             Description = SetDescription();
             LoadSettings();
+        }
+
+        private void UpdateSettings()
+        {
             GlobalSettings settings = SettingsManager.GetSettings();
             HasLightFX = settings.DeviceSettings.HasLightFXSdk;
             HasChroma = settings.DeviceSettings.HasChromaSDK;
@@ -136,6 +140,7 @@ namespace ViewLibrary.Model.Effects
 
         public void StartEffect()
         {
+            UpdateSettings();
             SaveSettings();
             EffectManager.Instance.StartEffect(this);
         }
@@ -148,31 +153,7 @@ namespace ViewLibrary.Model.Effects
         protected abstract string SetDescription();
         public abstract void EffectAction(); 
 
-        protected void Initialise()
-        {
-            if (HasLightFX)
-            {
-                AlienFXLightingControl.FXInit();
-            }
-
-            if (HasChroma && ChromaGuid != Guid.Empty)
-            {
-                Chroma.Instance.Initialize();
-            }
-        }
-
-        protected void Uninitialise()
-        {
-            if (HasLightFX)
-            {
-                AlienFXLightingControl.FXRelease();
-            }
-
-            if (HasChroma && ChromaGuid != Guid.Empty)
-            {
-                Chroma.Instance.Uninitialize();
-            }
-        }
+        
 
         protected abstract void LoadSettings();
         public abstract void SaveSettings();

@@ -67,9 +67,7 @@ namespace ViewLibrary.Model.Effects
 
             int refreshRate = RefreshRate;
             Rectangle bounds = new Rectangle((int)MonitorRect.X, (int)MonitorRect.Y, (int)MonitorRect.Width, (int)MonitorRect.Height);
-
-            Initialise();
-
+            
             while (UseEffect)
             {
                 ChromaFX.Color color = GetScreenColour(bounds);
@@ -87,8 +85,6 @@ namespace ViewLibrary.Model.Effects
 
                 Thread.Sleep(refreshRate);
             }
-
-            Uninitialise();
         }
 
         private ChromaFX.Color GetScreenColour(Rectangle bounds)

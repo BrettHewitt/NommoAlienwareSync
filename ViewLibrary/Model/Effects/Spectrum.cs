@@ -46,7 +46,6 @@ namespace ViewLibrary.Model.Effects
             int refreshRate = RefreshRate;
             double timerLimit = 100000 / Tempo;
             double tempo = Tempo;
-            Initialise();
 
             while (UseEffect)
             {
@@ -71,8 +70,6 @@ namespace ViewLibrary.Model.Effects
                     timer -= timerLimit;
                 }
             }
-
-            Uninitialise();
         }
 
         private static Color GetSpectrumColor(int w)

@@ -6,6 +6,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
+using ViewLibrary.Model.Effects;
 using ViewLibrary.ViewModel.Devices;
 using ViewLibrary.ViewModel.TabPages;
 
@@ -73,8 +76,9 @@ namespace ViewLibrary.ViewModel
             }
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(Dispatcher dispatcher)
         {
+            EffectManager.Instance.SetDispatcher(dispatcher);
             StatusVm = new StatusViewModel();
             LightingVm = new LightingViewModel();
             SettingsVm = new SettingsViewModel();

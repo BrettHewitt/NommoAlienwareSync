@@ -57,7 +57,6 @@ namespace ViewLibrary.Model.Effects
             int topIndex = 1;
             int bottomIndex = 0;
             Color[] colours = Colours.Select(x => x).ToArray();
-            Initialise();
 
             while (UseEffect)
             {
@@ -115,8 +114,6 @@ namespace ViewLibrary.Model.Effects
 
                 Thread.Sleep(refreshRate);
             }
-
-            Uninitialise();
         }
 
         protected override void LoadSettings()

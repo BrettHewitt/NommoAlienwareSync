@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Windows.Interop;
+using System.Windows.Threading;
 using ViewLibrary.Model.Effects;
 using ViewLibrary.View;
 using ViewLibrary.ViewModel;
@@ -43,7 +44,7 @@ namespace ACLightingControl
             _NotifyIcon.DoubleClick += _NotifyIcon_DoubleClick; ;
             _NotifyIcon.MouseUp += NotifyIcon_MouseUp;
 
-            _MainWindowViewModel = new MainWindowViewModel();
+            _MainWindowViewModel = new MainWindowViewModel(Dispatcher.CurrentDispatcher);
 
             _MainWindowViewModel.Icon = AppIcon;
 
@@ -91,7 +92,7 @@ namespace ACLightingControl
         }
 
         private void ShowMainWindowView()
-        {
+        { 
             if (_MainWindowView == null)
             {
                 _MainWindowView = new MainWindowView();
