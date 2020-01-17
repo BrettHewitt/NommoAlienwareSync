@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,11 +10,12 @@ namespace ViewLibrary.Model.Settings
 {
     public class GlobalSettings
     {
-        public DeviceSettings DeviceSettings
-        { 
-            get;
-            set;
-        }
+        //[JsonIgnore]
+        //public DeviceSettings DeviceSettings
+        //{ 
+        //    get;
+        //    set;
+        //}
 
         public SpectrumSettings SpectrumSettings
         {

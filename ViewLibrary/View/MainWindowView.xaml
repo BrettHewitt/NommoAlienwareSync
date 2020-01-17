@@ -59,6 +59,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="Status"/>
                         <Grid Grid.Row="1" Margin="10">
@@ -83,6 +84,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
+                        <Button Grid.Row="4" Content="Refresh" Command="{Binding Path=RefreshCommand}" Width="300" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                     </Grid>
                 </TabItem>
                 <TabItem DataContext="{Binding LightingVm}" Style="{DynamicResource MainTabHeaderItem}" BorderBrush="Transparent" Background="Transparent" BorderThickness="0">

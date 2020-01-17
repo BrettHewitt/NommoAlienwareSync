@@ -128,6 +128,7 @@
     <Compile Include="Model\Settings\OpSettings\GeneralSettings.cs" />
     <Compile Include="Model\Settings\OpSettings\LightingSettings.cs" />
     <Compile Include="Model\Settings\ProgramSettings.cs" />
+    <Compile Include="Model\Settings\RuntimeGlobals.cs" />
     <Compile Include="Model\Settings\SettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

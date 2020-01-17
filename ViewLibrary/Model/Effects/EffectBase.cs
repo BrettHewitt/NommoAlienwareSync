@@ -132,10 +132,9 @@ namespace ViewLibrary.Model.Effects
 
         private void UpdateSettings()
         {
-            GlobalSettings settings = SettingsManager.GetSettings();
-            HasLightFX = settings.DeviceSettings.HasLightFXSdk;
-            HasChroma = settings.DeviceSettings.HasChromaSDK;
-            ChromaGuid = settings.DeviceSettings.HasNommo ? ChromaFX.Devices.Devices.Nommo : ChromaFX.Devices.Devices.NommoPro;
+            HasLightFX = RuntimeGlobals.HasLightFXSdk;
+            HasChroma = RuntimeGlobals.HasChromaSDK;
+            ChromaGuid = RuntimeGlobals.HasNommo ? ChromaFX.Devices.Devices.Nommo : ChromaFX.Devices.Devices.NommoPro;
         }
 
         public void StartEffect()

@@ -35,7 +35,6 @@ namespace ViewLibrary.Model.Settings
             if (!File.Exists(filePath))
             {
                 GlobalSettings settings = new GlobalSettings();
-                settings.DeviceSettings = new DeviceSettings();
                 settings.SpectrumSettings = new SpectrumSettings();
                 settings.ScreenCaptureSettings = new ScreenCaptureSettings();
                 settings.CustomSettings = new CustomSettings();

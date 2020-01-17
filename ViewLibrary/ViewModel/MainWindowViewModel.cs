@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using ViewLibrary.Model.Effects;
+using ViewLibrary.Model.Settings;
 using ViewLibrary.ViewModel.Devices;
 using ViewLibrary.ViewModel.TabPages;
 

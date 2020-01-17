@@ -52,6 +52,7 @@ namespace ViewLibrary.Model.Effects
         }
 
         public event DeviceChangedHandler DeviceChanged;
+        public event DeviceChangedHandler MonitorDeviceChanged;
 
         public void StartEffect(EffectBase effect)
         {
@@ -101,80 +102,107 @@ namespace ViewLibrary.Model.Effects
 
         public void Initialise()
         {
+            Task.Factory.StartNew(StartChromaDetection);
+            Task.Factory.StartNew(StartLightFXDetection);
+        }
+
+        private void StartChromaDetection()
+        {
             bool hasChromaSdk = InitChroma();
-            Guid chromaGuid = Guid.Empty;
-            ChromaFX.Devices.DeviceInfo? speaker = null;
-            if (hasChromaSdk)
+            
+            if (!hasChromaSdk)
             {
-                //Check for Nommo
-                try
-                {
-                    speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.Nommo);
-                    chromaGuid = ChromaFX.Devices.Devices.Nommo;
-                }
-                catch (Exception)
-                {
-                    //No device present
-                }
-
-                //Check for Nommo Pro
-                try
-                {
-                    speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.NommoPro);
-                    chromaGuid = ChromaFX.Devices.Devices.NommoPro;
-                }
-                catch (Exception)
-                {
-                    //No device presents
-                }
+                return;
             }
 
-            bool hasLightFX = InitLightFX();
-
-            if (DeviceChanged != null)
+            while (true)
             {
-                DeviceChanged(this, new DeviceChangedEventArgs()
+                Guid chromaGuid = Guid.Empty;
+                ChromaFX.Devices.DeviceInfo? speaker = null;
+                if (hasChromaSdk)
                 {
-                    HasChroma = hasChromaSdk,
-                    HasLightFX = hasLightFX,
-                    ChromaGuid = chromaGuid,
-                    ChromaSpeaker = speaker,
-                });
-            }
-
-
-            if (!hasLightFX)
-            {
-                //Light FX isn't initalised, but could be because we are waiting for the service to start running
-                //Check if service exists and if so wait for it to start running
-                Task.Factory.StartNew(() =>
-                {
+                    //Check for Nommo
                     try
                     {
-                        using (ServiceController sc = new ServiceController("AWCCService"))
-                        {
-                            sc.WaitForStatus(ServiceControllerStatus.Running);
-                            Thread.Sleep(3000);
-                            Dispatcher.Invoke(() =>
-                            {
-                                hasLightFX = InitLightFX();
-
-                                DeviceChanged(this, new DeviceChangedEventArgs()
-                                {
-                                    HasChroma = hasChromaSdk,
-                                    HasLightFX = hasLightFX,
-                                    ChromaGuid = chromaGuid,
-                                    ChromaSpeaker = speaker,
-                                });
-                            });
-                        }
+                        speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.Nommo);
+                        chromaGuid = ChromaFX.Devices.Devices.Nommo;
                     }
                     catch (Exception)
                     {
-                        //Service doesn't exist
-                        return;
+                        //No device present
+                    }
+
+                    //Check for Nommo Pro
+                    try
+                    {
+                        speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.NommoPro);
+                        chromaGuid = ChromaFX.Devices.Devices.NommoPro;
+                    }
+                    catch (Exception)
+                    {
+                        //No device presents
+                    }
+                }
+
+                if (chromaGuid == Guid.Empty)
+                {
+                    Thread.Sleep(5000);
+                    continue;
+                }
+
+                Dispatcher.Invoke(() =>
+                {
+                    if (DeviceChanged != null)
+                    {
+                        DeviceChanged(this, new DeviceChangedEventArgs()
+                        {
+                            HasChroma = true,
+                            ChromaGuid = chromaGuid,
+                            ChromaSpeaker = speaker
+                        });
                     }
                 });
+
+                return;
+            }
+        }
+
+        private void StartLightFXDetection()
+        {
+            //Light FX isn't initalised, but could be because we are waiting for the service to start running
+            //Check if service exists and if so wait for it to start running                
+            try
+            {
+                using (ServiceController sc = new ServiceController("AWCCService"))
+                {
+                    while (true)
+                    {                        
+                        sc.WaitForStatus(ServiceControllerStatus.Running);
+                        Thread.Sleep(5000);
+
+                        bool hasLightFX = InitLightFX();
+                        if (hasLightFX)
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                if (MonitorDeviceChanged != null)
+                                {
+                                    MonitorDeviceChanged(this, new DeviceChangedEventArgs()
+                                    {
+                                        HasLightFX = hasLightFX,
+                                    });
+                                }
+                            });
+
+                            return;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //Service doesn't exist
+                return;
             }
         }
 
