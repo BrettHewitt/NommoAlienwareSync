@@ -58,7 +58,11 @@
     </Reference>
     <Reference Include="ChromaFX, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ChromaFX\ChromaFX\bin\x64\Debug\netstandard2.0\ChromaFX.dll</HintPath>
+      <HintPath>..\..\..\ChromaFX\ChromaFX\bin\x64\Release\netstandard2.0\ChromaFX.dll</HintPath>
+    </Reference>
+    <Reference Include="huestream_csharp_managed, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Brett\source\repos\HueTestConsole\HueEdk\Release_x64\huestream_csharp_managed.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
@@ -71,10 +75,46 @@
       <HintPath>..\packages\ScreenInformation.1.0.2.1\lib\net452\ScreenInformation.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
@@ -85,7 +125,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -106,12 +145,15 @@
     <Compile Include="Controls\MonitorDragSelection.xaml.cs">
       <DependentUpon>MonitorDragSelection.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Converters\EffectToUserControlConverter.cs" />
     <Compile Include="Converters\InverseBooleanToStateConverter.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\LineGapMaskConverter.cs" />
     <Compile Include="Converters\SettingToUserControlConverter.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Model\Devices\DeviceType.cs" />
     <Compile Include="Model\Effects\CustomEffect.cs" />
     <Compile Include="Model\Effects\DeviceChangedEventArgs.cs" />
@@ -120,7 +162,10 @@
     <Compile Include="Model\Effects\ScreenCapture.cs" />
     <Compile Include="Model\Effects\Spectrum.cs" />
     <Compile Include="Model\Effects\TempoBaseEffect.cs" />
+    <Compile Include="Model\Hue\HueFeedbackHandler.cs" />
+    <Compile Include="Model\Hue\HueFX.cs" />
     <Compile Include="Model\Settings\DeviceSettings.cs" />
+    <Compile Include="Model\Settings\Devices\HueSettings.cs" />
     <Compile Include="Model\Settings\Effects\CustomSettings.cs" />
     <Compile Include="Model\Settings\Effects\ScreenCaptureSettings.cs" />
     <Compile Include="Model\Settings\Effects\SpectrumSettings.cs" />
@@ -157,6 +202,7 @@
     <Compile Include="ViewModel\TabPages\Effects\TempoBaseEffectViewModel.cs" />
     <Compile Include="ViewModel\TabPages\LightingViewModel.cs" />
     <Compile Include="ViewModel\TabPages\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\TabPages\Settings\HueSettingsViewModel.cs" />
     <Compile Include="ViewModel\TabPages\Settings\LightingSettingsViewModel.cs" />
     <Compile Include="ViewModel\TabPages\Settings\SettingsBaseViewModel.cs" />
     <Compile Include="ViewModel\TabPages\StatusViewModel.cs" />
@@ -174,11 +220,20 @@
     <Compile Include="View\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Settings\AlienwareSettingsView.xaml.cs">
+      <DependentUpon>AlienwareSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Settings\GeneralSettingsView.xaml.cs">
       <DependentUpon>GeneralSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Settings\HueSettingsView.xaml.cs">
+      <DependentUpon>HueSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Settings\LightingSettingsView.xaml.cs">
       <DependentUpon>LightingSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\RazerSettingsView.xaml.cs">
+      <DependentUpon>RazerSettingsView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -201,11 +256,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Settings\AlienwareSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Settings\GeneralSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Settings\HueSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Settings\LightingSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\RazerSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,6 +302,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ChromaAppInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="huestream_csharp_native.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\dd_transparent_White_square_256x256.png" />

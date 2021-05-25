@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewLibrary.Model.Settings.Devices;
 using ViewLibrary.Model.Settings.Effects;
 using ViewLibrary.Model.Settings.OpSettings;
 
@@ -38,6 +39,7 @@ namespace ViewLibrary.Model.Settings
                 settings.SpectrumSettings = new SpectrumSettings();
                 settings.ScreenCaptureSettings = new ScreenCaptureSettings();
                 settings.CustomSettings = new CustomSettings();
+                settings.HueSettings = new HueSettings();
                 ProgramSettings programSettings = new ProgramSettings();
                 programSettings.GeneralSettings = new GeneralSettings();
                 programSettings.LightingSettings = new LightingSettings();

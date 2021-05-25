@@ -31,5 +31,17 @@ namespace ViewLibrary.Model.Settings
             get;
             set;
         }
+
+        public bool HasHue
+        {
+            get;
+            set;
+        }
+
+        public string HueKey
+        {
+            get;
+            set;
+        }
     }
 }

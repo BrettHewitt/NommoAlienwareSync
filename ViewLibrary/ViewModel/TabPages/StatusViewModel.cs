@@ -1,15 +1,8 @@
 ﻿using AlienFXWrapper;
-using ChromaFX;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewLibrary.Commands;
 using ViewLibrary.Model.Effects;
 using ViewLibrary.Model.Settings;
-using ViewLibrary.Properties;
 using ViewLibrary.ViewModel.Devices;
 
 namespace ViewLibrary.ViewModel.TabPages
@@ -160,22 +153,17 @@ namespace ViewLibrary.ViewModel.TabPages
         private void Instance_DeviceChanged(object sender, DeviceChangedEventArgs args)
         {
             ObservableCollection<DeviceBaseViewModel> devices = new ObservableCollection<DeviceBaseViewModel>();
-            
-            RuntimeGlobals.HasChromaSDK = args.HasChroma;
 
             if (args.HasChroma)
             {
-                if (args.ChromaGuid == ChromaFX.Devices.Devices.Nommo && args.ChromaSpeaker.HasValue)
-                {
-                    RuntimeGlobals.HasNommo = true;
-                }
-                else if (args.ChromaGuid == ChromaFX.Devices.Devices.NommoPro && args.ChromaSpeaker.HasValue)
-                {
-                    RuntimeGlobals.HasNommoPro = true;
-                }
+                RuntimeGlobals.HasChromaSDK = true;
+                ChromaError = !args.HasChroma;
             }
 
-            ChromaError = !args.HasChroma;
+            if (args.HasHue)
+            {
+                RuntimeGlobals.HasHue = true;
+            }
 
             PopulateMonitors(devices);
             PopulateSpeakers(devices);

@@ -1,17 +1,14 @@
 ﻿using AlienFXWrapper;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Threading;
+using System.Windows;
 using ChromaFX;
 using ChromaFX.Devices.Speakers;
 using ChromaFX.DevicesInterface.Speakers;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+using ViewLibrary.Model.Hue;
 using ViewLibrary.Model.Settings;
+using Color = System.Drawing.Color;
 
 namespace ViewLibrary.Model.Effects
 {
@@ -63,31 +60,43 @@ namespace ViewLibrary.Model.Effects
         public override void EffectAction()
         {
             UseEffect = true;
-            ISpeakers speaker = new Speakers();
-
+            ISpeakers speakers = new Speakers();
             int refreshRate = RefreshRate;
             Rectangle bounds = new Rectangle((int)MonitorRect.X, (int)MonitorRect.Y, (int)MonitorRect.Width, (int)MonitorRect.Height);
             
             while (UseEffect)
             {
-                ChromaFX.Color color = GetScreenColour(bounds);
+                Color color = GetScreenColour(bounds);
 
                 if (HasLightFX)
                 {
                     AlienFXLightingControl.SetFXColour(color.R, color.G, color.B);
                 }
 
-                if (HasChroma && ChromaGuid != Guid.Empty)
+                if (HasChroma)
                 {
-                    Custom custom = new Custom(color);
-                    speaker.SetStatic(custom, ChromaGuid);
+                    ChromaFX.Color coraleColor = new ChromaFX.Color(color.R, color.G, color.B);
+
+                    
+                    //Chroma.Instance.Headset.SetAll(coraleColor);
+                    //ChromaFX.Devices.Mouse.Mouse.Instance.SetAll(coraleColor);
+                    //ChromaFX.Devices.ChromaLink.ChromaLink.Instance.SetAll(coraleColor);
+                    Chroma.Instance.SetAll(coraleColor);
+
+                    //Custom custom = new Custom(coraleColor);
+                    //speakers.SetStatic(custom, ChromaFX.Devices.Devices.Nommo);
+                }
+
+                if (HasHue)
+                {
+                    HueFX.Instance.SetColour(color);
                 }
 
                 Thread.Sleep(refreshRate);
             }
         }
 
-        private ChromaFX.Color GetScreenColour(Rectangle bounds)
+        private Color GetScreenColour(Rectangle bounds)
         {
             using (Bitmap singlePixel = new Bitmap(1, 1))
             using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
@@ -103,8 +112,7 @@ namespace ViewLibrary.Model.Effects
                     g.DrawImage(bitmap, new Rectangle(0, 0, 1, 1));
                 }
 
-                System.Drawing.Color pixel = singlePixel.GetPixel(0, 0);
-                return new ChromaFX.Color(pixel.R, pixel.G, pixel.B);
+                return singlePixel.GetPixel(0, 0);
             }
         }
     }

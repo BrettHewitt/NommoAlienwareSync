@@ -1,14 +1,13 @@
 ﻿using AlienFXWrapper;
-using ChromaFX;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using ChromaFX;
+using ViewLibrary.Helpers;
+using ViewLibrary.Model.Hue;
 using ViewLibrary.Model.Settings;
 
 namespace ViewLibrary.Model.Effects
@@ -53,6 +52,11 @@ namespace ViewLibrary.Model.Effects
 
         public event DeviceChangedHandler DeviceChanged;
         public event DeviceChangedHandler MonitorDeviceChanged;
+
+        public void Exiting()
+        {
+            HueFX.Instance.ShutDown();
+        }
 
         public void StartEffect(EffectBase effect)
         {
@@ -102,8 +106,55 @@ namespace ViewLibrary.Model.Effects
 
         public void Initialise()
         {
+            Task.Factory.StartNew(StartHueDetection);
             Task.Factory.StartNew(StartChromaDetection);
             Task.Factory.StartNew(StartLightFXDetection);
+        }
+
+        private void StartHueDetection()
+        {
+            var settings = SettingsManager.GetSettings();
+
+            if (!settings.HueSettings.EnableHue)
+            {
+                RuntimeGlobals.HasHue = false;
+                return;
+            }
+
+            string key = settings.HueSettings.Key;
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                //Hue not configured
+                RuntimeGlobals.HasHue = false;
+                return;
+            }
+
+            HueFX.Instance.InitHueEdk(key);
+
+            HueFX.Instance.BridgeConnected += OnBridgeConnected;
+            HueFX.Instance.UserProcedureFinished += OnUserProcedureFinished;
+            
+            HueFX.Instance.Connect();
+        }
+
+        private void OnBridgeConnected(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                DeviceChanged?.Invoke(this, new DeviceChangedEventArgs()
+                {
+                    HasHue = true,
+                });
+            });
+
+            HueFX.Instance.BridgeConnected -= OnBridgeConnected;
+        }
+
+        private void OnUserProcedureFinished(object sender, EventArgs e)
+        {
+            RuntimeGlobals.HasHue = false;
+            HueFX.Instance.UserProcedureFinished -= OnUserProcedureFinished;
         }
 
         private void StartChromaDetection()
@@ -114,57 +165,14 @@ namespace ViewLibrary.Model.Effects
             {
                 return;
             }
-
-            while (true)
+            
+            Dispatcher.Invoke(() =>
             {
-                Guid chromaGuid = Guid.Empty;
-                ChromaFX.Devices.DeviceInfo? speaker = null;
-                if (hasChromaSdk)
+                DeviceChanged?.Invoke(this, new DeviceChangedEventArgs()
                 {
-                    //Check for Nommo
-                    try
-                    {
-                        speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.Nommo);
-                        chromaGuid = ChromaFX.Devices.Devices.Nommo;
-                    }
-                    catch (Exception)
-                    {
-                        //No device present
-                    }
-
-                    //Check for Nommo Pro
-                    try
-                    {
-                        speaker = Chroma.Instance.Query(ChromaFX.Devices.Devices.NommoPro);
-                        chromaGuid = ChromaFX.Devices.Devices.NommoPro;
-                    }
-                    catch (Exception)
-                    {
-                        //No device presents
-                    }
-                }
-
-                if (chromaGuid == Guid.Empty)
-                {
-                    Thread.Sleep(5000);
-                    continue;
-                }
-
-                Dispatcher.Invoke(() =>
-                {
-                    if (DeviceChanged != null)
-                    {
-                        DeviceChanged(this, new DeviceChangedEventArgs()
-                        {
-                            HasChroma = true,
-                            ChromaGuid = chromaGuid,
-                            ChromaSpeaker = speaker
-                        });
-                    }
+                    HasChroma = true,
                 });
-
-                return;
-            }
+            });
         }
 
         private void StartLightFXDetection()
@@ -185,13 +193,10 @@ namespace ViewLibrary.Model.Effects
                         {
                             Dispatcher.Invoke(() =>
                             {
-                                if (MonitorDeviceChanged != null)
+                                MonitorDeviceChanged?.Invoke(this, new DeviceChangedEventArgs()
                                 {
-                                    MonitorDeviceChanged(this, new DeviceChangedEventArgs()
-                                    {
-                                        HasLightFX = hasLightFX,
-                                    });
-                                }
+                                    HasLightFX = hasLightFX,
+                                });
                             });
 
                             return;
@@ -208,8 +213,9 @@ namespace ViewLibrary.Model.Effects
 
         public void Uninitialise()
         {
-            AlienFXLightingControl.FXRelease();
-            Chroma.Instance.Uninitialize();
+            UnInitChroma();
+            HueFX.Instance.ShutDown();
+            UnInitLightFX();
         }
 
         private bool InitLightFX()

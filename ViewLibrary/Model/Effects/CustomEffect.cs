@@ -1,14 +1,11 @@
 ﻿using AlienFXWrapper;
-using ChromaFX;
-using ChromaFX.Devices.Speakers;
-using ChromaFX.DevicesInterface.Speakers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using ChromaFX;
+using ViewLibrary.Model.Hue;
 using ViewLibrary.Model.Settings;
+using Color = System.Drawing.Color;
 
 namespace ViewLibrary.Model.Effects
 {
@@ -47,7 +44,6 @@ namespace ViewLibrary.Model.Effects
             }
 
             UseEffect = true;
-            ISpeakers speaker = new Speakers();
 
             int refreshRate = RefreshRate;
             int colourCount = Colours.Length;
@@ -68,11 +64,18 @@ namespace ViewLibrary.Model.Effects
                         AlienFXLightingControl.SetFXColour(color.R, color.G, color.B);
                     }
 
-                    if (HasChroma && ChromaGuid != Guid.Empty)
+                    if (HasChroma)
                     {
-                        Custom custom = new Custom(color);
-                        speaker.SetStatic(custom, ChromaGuid);
+                        ChromaFX.Color coraleColor = new ChromaFX.Color(color.R, color.G, color.B);
+                        Chroma.Instance.SetAll(coraleColor);
                     }
+
+                    if (HasHue)
+                    {
+                        HueFX.Instance.SetColour(color);
+                    }
+
+                    Thread.Sleep(1000);
                 }
                 else
                 {
@@ -103,10 +106,15 @@ namespace ViewLibrary.Model.Effects
                         AlienFXLightingControl.SetFXColour(color.R, color.G, color.B);
                     }
 
-                    if (HasChroma && ChromaGuid != Guid.Empty)
+                    if (HasChroma)
                     {
-                        Custom custom = new Custom(color);
-                        speaker.SetStatic(custom, ChromaGuid);
+                        ChromaFX.Color coraleColor = new ChromaFX.Color(color.R, color.G, color.B);
+                        Chroma.Instance.SetAll(coraleColor);
+                    }
+
+                    if (HasHue)
+                    {
+                        HueFX.Instance.SetColour(color);
                     }
 
                     timer += refreshRate;
@@ -120,7 +128,7 @@ namespace ViewLibrary.Model.Effects
         {
             GlobalSettings settings = SettingsManager.GetSettings();
             Tempo = settings.CustomSettings.Tempo;
-            Colours = settings.CustomSettings.Colours.Select(x => new Color(x.R, x.G, x.B)).ToArray();
+            Colours = settings.CustomSettings.Colours.Select(x => Color.FromArgb(x.R, x.G, x.B)).ToArray();
         }
 
         public override void SaveSettings()
@@ -147,7 +155,7 @@ namespace ViewLibrary.Model.Effects
                 t = 0;
             }
 
-            return new Color
+            return Color.FromArgb
             (
             (byte)(a.R + (b.R - a.R) * t),
             (byte)(a.G + (b.G - a.G) * t),

@@ -28,7 +28,7 @@
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Lighting Settings" Foreground="White" Margin="0,10,0,2" FontSize="20" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Refresh Rate: " FontSize="14"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=RefreshRate, Mode=TwoWay}" Width="40" Margin="5,0"/>
+            <TextBox Text="{Binding Path=RefreshRate, Mode=TwoWay}" Width="40" Margin="5,0"/>
             <TextBlock Text="ms" FontSize="14"/>
         </StackPanel>
     </Grid>

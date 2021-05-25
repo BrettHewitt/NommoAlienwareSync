@@ -68,7 +68,6 @@ namespace ViewLibrary.ViewModel.TabPages.Effects
             }
         }
 
-
         private TempoBaseEffect _TempoModel;
         public TempoBaseEffect TempoModel
         {

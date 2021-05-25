@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ViewLibrary.Commands;
 using ViewLibrary.ViewModel.TabPages.Settings;
 
@@ -63,8 +64,11 @@ namespace ViewLibrary.ViewModel.TabPages
             }
         }
 
-        public SettingsViewModel()
+        private Dispatcher Dispatcher { get; }
+
+        public SettingsViewModel(Dispatcher dispatcher)
         {
+            Dispatcher = dispatcher;
             LoadSettings();
         }
 
@@ -73,6 +77,7 @@ namespace ViewLibrary.ViewModel.TabPages
             ObservableCollection<SettingsBaseViewModel> settings = new ObservableCollection<SettingsBaseViewModel>();
             settings.Add(new GeneralSettingsViewModel());
             settings.Add(new LightingSettingsViewModel());
+            settings.Add(new HueSettingsViewModel(Dispatcher));
             Settings = settings;
             
             SelectedSetting = Settings.First();

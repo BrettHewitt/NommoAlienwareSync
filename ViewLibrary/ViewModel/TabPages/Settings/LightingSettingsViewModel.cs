@@ -48,9 +48,9 @@ namespace ViewLibrary.ViewModel.TabPages.Settings
 
         public override void SaveSettings()
         {
-            if (RefreshRate < 10 || RefreshRate > 1000)
+            if (RefreshRate < 50 || RefreshRate > 1000)
             {
-                MessageBox.Show("Refresh Rate must be between 10 and 1000");
+                MessageBox.Show("Refresh Rate must be between 50 and 1000");
                 return;
             }
 

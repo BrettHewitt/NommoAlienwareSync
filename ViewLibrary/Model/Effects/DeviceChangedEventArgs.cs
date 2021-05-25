@@ -1,9 +1,4 @@
-﻿using ChromaFX.Devices.Speakers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace ViewLibrary.Model.Effects
 {
@@ -21,17 +16,23 @@ namespace ViewLibrary.Model.Effects
             set;
         }
 
+        public bool HasHue
+        {
+            get;
+            set;
+        }
+
         public Guid ChromaGuid
         {
             get;
             set;
         }
 
-        public ChromaFX.Devices.DeviceInfo? ChromaSpeaker
-        {
-            get;
-            set;
-        }
+        //public ChromaFX.Devices.DeviceInfo? ChromaSpeaker
+        //{
+        //    get;
+        //    set;
+        //}
     }
 
     public delegate void DeviceChangedHandler(object sender, DeviceChangedEventArgs args);

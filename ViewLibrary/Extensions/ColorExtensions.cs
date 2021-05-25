@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ViewLibrary.Extensions
+﻿namespace ViewLibrary.Extensions
 {
     public static class ColorExtensions
     {
-        public static System.Windows.Media.Color ToMediaColor(this ChromaFX.Color chromaColor)
+        //public static Corale.Colore.Core.Color ToCoraleColor(this System.Drawing.Color drawingColor)
+        //{
+        //    return new Corale.Colore.Core.Color(drawingColor.R, drawingColor.G, drawingColor.B);
+        //}
+
+        public static System.Windows.Media.Color ToMediaColor(this System.Drawing.Color chromaColor)
         {
             return System.Windows.Media.Color.FromRgb(chromaColor.R, chromaColor.G, chromaColor.B);
         }
 
-        public static ChromaFX.Color ToChromaColor(this System.Windows.Media.Color mediaColor)
+        public static System.Drawing.Color ToDrawingColor(this System.Windows.Media.Color mediaColor)
         {
-            return new ChromaFX.Color(mediaColor.R, mediaColor.G, mediaColor.B);
+            return System.Drawing.Color.FromArgb(mediaColor.R, mediaColor.G, mediaColor.B);
         }
     }
 }

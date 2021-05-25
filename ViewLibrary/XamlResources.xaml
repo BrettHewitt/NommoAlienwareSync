@@ -417,6 +417,10 @@
     <converters:InverseBooleanToStateConverter x:Key="InverseBooleanToStateConverter"/>
     <converters:EffectToUserControlConverter x:Key="EffectToUserControlConverter"/>
     <converters:SettingToUserControlConverter x:Key="SettingToUserControlConverter"/>
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
+
     <DataTemplate x:Key="NommoTemplate">
         <StackPanel>
             <Image Source="Resources/nommo.jpg" Height="200" HorizontalAlignment="Center"/>
@@ -592,9 +596,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <converters:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
+    
     <LinearGradientBrush x:Key="ColorPickerDarkBorderBrush"
                        EndPoint="0.5,1"
                        StartPoint="0.5,0">

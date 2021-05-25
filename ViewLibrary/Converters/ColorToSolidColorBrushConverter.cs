@@ -14,9 +14,9 @@ namespace ViewLibrary.Converters
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             Color color;
-            if (value.GetType() == typeof(ChromaFX.Color))
+            if (value.GetType() == typeof(System.Drawing.Color))
             {
-                color = ((ChromaFX.Color)value).ToMediaColor();
+                color = ((System.Drawing.Color)value).ToMediaColor();
             }
             else
             {

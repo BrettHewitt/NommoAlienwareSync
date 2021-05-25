@@ -1,10 +1,4 @@
-﻿using AlienFXWrapper;
-using ChromaFX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using ViewLibrary.Model.Settings;
 
 namespace ViewLibrary.Model.Effects
@@ -83,6 +77,26 @@ namespace ViewLibrary.Model.Effects
             }
         }
 
+        private readonly object _HasHueLock = new object();
+        private bool _HasHue;
+        public bool HasHue
+        {
+            get
+            {
+                lock (_HasHueLock)
+                {
+                    return _HasHue;
+                }
+            }
+            set
+            {
+                lock (_HasHueLock)
+                {
+                    _HasHue = value;
+                }
+            }
+        }
+        
         private readonly object _ChromaGuidLock = new object();
         private Guid _ChromaGuid;
         public Guid ChromaGuid
@@ -104,7 +118,7 @@ namespace ViewLibrary.Model.Effects
         }
 
         private readonly object _RefreshRateLock = new object();
-        private int _RefreshRate = 20;
+        private int _RefreshRate = 50;
         public int RefreshRate
         {
             get
@@ -132,9 +146,10 @@ namespace ViewLibrary.Model.Effects
 
         private void UpdateSettings()
         {
+            HasHue = RuntimeGlobals.HasHue;
             HasLightFX = RuntimeGlobals.HasLightFXSdk;
             HasChroma = RuntimeGlobals.HasChromaSDK;
-            ChromaGuid = RuntimeGlobals.HasNommo ? ChromaFX.Devices.Devices.Nommo : ChromaFX.Devices.Devices.NommoPro;
+            //ChromaGuid = RuntimeGlobals.HasNommo ? ChromaFX.Devices.Devices.Nommo : ChromaFX.Devices.Devices.NommoPro;
         }
 
         public void StartEffect()

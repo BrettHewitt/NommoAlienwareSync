@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ViewLibrary.Model.Settings.Devices;
 using ViewLibrary.Model.Settings.Effects;
 
 namespace ViewLibrary.Model.Settings
@@ -36,6 +37,12 @@ namespace ViewLibrary.Model.Settings
         }
 
         public ProgramSettings ProgramSettings
+        {
+            get;
+            set;
+        }
+
+        public HueSettings HueSettings
         {
             get;
             set;

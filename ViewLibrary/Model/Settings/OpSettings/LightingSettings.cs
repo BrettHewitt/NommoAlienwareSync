@@ -12,6 +12,6 @@ namespace ViewLibrary.Model.Settings.OpSettings
         {
             get;
             set;
-        } = 20;
+        } = 50;
     }
 }

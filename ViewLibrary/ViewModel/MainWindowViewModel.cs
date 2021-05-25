@@ -1,16 +1,5 @@
-﻿using AlienFXWrapper;
-using ChromaFX;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 using ViewLibrary.Model.Effects;
-using ViewLibrary.Model.Settings;
-using ViewLibrary.ViewModel.Devices;
 using ViewLibrary.ViewModel.TabPages;
 
 namespace ViewLibrary.ViewModel
@@ -82,7 +71,7 @@ namespace ViewLibrary.ViewModel
             EffectManager.Instance.SetDispatcher(dispatcher);
             StatusVm = new StatusViewModel();
             LightingVm = new LightingViewModel();
-            SettingsVm = new SettingsViewModel();
+            SettingsVm = new SettingsViewModel(dispatcher);
         }
     }
 }

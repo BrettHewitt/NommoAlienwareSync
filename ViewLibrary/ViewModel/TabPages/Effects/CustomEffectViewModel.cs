@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using ViewLibrary.Commands;
 using ViewLibrary.Extensions;
 using ViewLibrary.Model.Effects;
-using ViewLibrary.Model.Settings;
 
 namespace ViewLibrary.ViewModel.TabPages.Effects
 {
@@ -145,7 +140,7 @@ namespace ViewLibrary.ViewModel.TabPages.Effects
         
         private void AddColour()
         {
-            Colours.Add(new ColourViewModel(SelectedColourPicker.ToChromaColor()));
+            Colours.Add(new ColourViewModel(SelectedColourPicker.ToDrawingColor()));
         }
 
         private void RemoveColour()
@@ -167,7 +162,7 @@ namespace ViewLibrary.ViewModel.TabPages.Effects
         {
             if (SelectedColour != null)
             {
-                SelectedColour.Colour = SelectedColourPicker.ToChromaColor();
+                SelectedColour.Colour = SelectedColourPicker.ToDrawingColor();
             }
         }
 
@@ -182,8 +177,8 @@ namespace ViewLibrary.ViewModel.TabPages.Effects
 
     public class ColourViewModel : ViewModelBase
     {
-        private ChromaFX.Color _Colour;
-        public ChromaFX.Color Colour
+        private System.Drawing.Color _Colour;
+        public System.Drawing.Color Colour
         {
             get
             {
@@ -202,7 +197,7 @@ namespace ViewLibrary.ViewModel.TabPages.Effects
             }
         }
 
-        public ColourViewModel(ChromaFX.Color colour)
+        public ColourViewModel(System.Drawing.Color colour)
         {
             Colour = colour;
         }
